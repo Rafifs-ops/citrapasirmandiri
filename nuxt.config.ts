@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     '@nuxtjs/sitemap'
   ],
   site: {
-    url: 'https://citrapasirmandiri.com',
+    url: 'https://citrapasirmandiri.vercel.app',
     name: 'PT Citra Pasirmandiri'
   },
   app: {
