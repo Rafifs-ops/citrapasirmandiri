@@ -33,17 +33,9 @@ const services = [
             setiap lembar cetakan.
           </p>
           <div class="flex gap-4">
-            <a href="#"
+            <a href="instagram.com/citrapasirmandiri"
               class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition-colors">
               <Instagram :size="20" />
-            </a>
-            <a href="#"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition-colors">
-              <Facebook :size="20" />
-            </a>
-            <a href="#"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent transition-colors">
-              <Twitter :size="20" />
             </a>
           </div>
         </div>
@@ -104,8 +96,7 @@ const services = [
                 <Phone :size="20" />
               </div>
               <p class="text-sm text-white/60">
-                +62 812 3456 7890 <br />
-                (021) 1234567
+                (021) 43922236
               </p>
             </li>
             <li class="flex gap-4">
