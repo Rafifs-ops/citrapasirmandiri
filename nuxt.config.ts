@@ -7,7 +7,8 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/sitemap'
+    '@nuxtjs/sitemap',
+    '@pinia/nuxt'
   ],
   site: {
     url: 'https://citrapasirmandiri.vercel.app',
@@ -23,6 +24,14 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap' }
       ]
+    }
+  },
+  nitro: {
+    storage: {
+      images: {
+        driver: 'fs',
+        base: './storage' // Menghubungkan ke folder /storage di root
+      }
     }
   }
 })

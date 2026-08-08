@@ -3,6 +3,13 @@ import { onMounted } from 'vue'
 import { ArrowRight, Printer, Zap, CheckCircle } from 'lucide-vue-next'
 import gsap from 'gsap'
 
+const props = defineProps({
+  data: {
+    type: Object,
+    required: true
+  }
+})
+
 onMounted(() => {
   const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
 
@@ -32,17 +39,16 @@ onMounted(() => {
           <div
             class="hero-badge inline-flex items-center gap-2 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-accent font-semibold text-sm mb-6">
             <Zap :size="16" />
-            Percetakan Tercepat & Berkualitas di Koja
+            {{ data.badgeText }}
           </div>
 
           <h1 class="hero-title text-5xl md:text-7xl font-bold text-primary leading-[1.1] mb-6">
-            Cetak Apapun <br />
-            <span class="text-accent">Tanpa Tunggu Lama.</span>
+            {{ data.title }} <br />
+            <span class="text-accent">{{ data.titleAccent }}</span>
           </h1>
 
           <p class="hero-desc text-lg md:text-xl text-gray-600 mb-10 max-w-xl leading-relaxed">
-            PT Citra Pasirmandiri menghadirkan solusi percetakan modern dengan mesin teknologi terkini. Hasil tajam,
-            proses cepat, dan harga yang bersahabat.
+            {{ data.description }}
           </p>
 
           <div class="hero-btns flex flex-wrap gap-4 mb-12">
@@ -74,7 +80,7 @@ onMounted(() => {
         <!-- Visual Content -->
         <div class="relative hero-image">
           <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-8 border-white">
-            <img src="/images/img-1.png" alt="Printing Footage"
+            <img :src="data.image" alt="Hero Image"
               class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700" />
           </div>
 

@@ -2,6 +2,15 @@
 import { MapPin, Clock, ShieldCheck, Award, Navigation } from 'lucide-vue-next'
 import gsap from 'gsap'
 
+const iconMap: Record<string, any> = { MapPin, Clock, ShieldCheck, Award }
+
+const props = defineProps({
+  data: {
+    type: Object,
+    required: true
+  }
+})
+
 onMounted(() => {
   const ctx = gsap.context(() => {
     gsap.from('.about-text', {
@@ -39,50 +48,21 @@ onMounted(() => {
         <div class="about-text">
           <h2 class="text-accent font-bold uppercase tracking-widest text-sm mb-4">Tentang Kami</h2>
           <h3 class="text-4xl md:text-5xl font-bold text-primary mb-8 leading-tight">
-            Partner Terpercaya untuk <br />
-            Segala Kebutuhan Cetak Anda.
+            {{ data.title }} <br />
+            {{ data.subtitle }}
           </h3>
           <p class="text-gray-600 text-lg mb-10 leading-relaxed">
-            Berlokasi strategis di Rawabadak Selatan, Koja, PT Citra Pasirmandiri telah melayani ribuan pelanggan mulai
-            dari UMKM hingga perusahaan besar. Kami percaya bahwa kualitas cetak yang baik adalah kunci dari branding
-            yang sukses.
+            {{ data.description }}
           </p>
 
           <div class="grid sm:grid-cols-2 gap-8 mb-10">
-            <div class="flex gap-4">
-              <div class="w-12 h-12 shrink-0 bg-blue-50 rounded-xl flex items-center justify-center text-accent">
-                <Clock :size="24" />
+            <div v-for="(feature, idx) in data.features" :key="idx" class="flex gap-4">
+              <div :class="`w-12 h-12 shrink-0 bg-${feature.color}-50 rounded-xl flex items-center justify-center text-${feature.color}-600`">
+                <component :is="iconMap[feature.icon]" :size="24" />
               </div>
               <div>
-                <h5 class="font-bold text-primary mb-1">Cepat & Tepat</h5>
-                <p class="text-sm text-gray-500">Deadline mepet? Kami solusinya dengan pengerjaan express.</p>
-              </div>
-            </div>
-            <div class="flex gap-4">
-              <div class="w-12 h-12 shrink-0 bg-green-50 rounded-xl flex items-center justify-center text-green-600">
-                <ShieldCheck :size="24" />
-              </div>
-              <div>
-                <h5 class="font-bold text-primary mb-1">Kualitas Terjamin</h5>
-                <p class="text-sm text-gray-500">QC ketat untuk setiap lembar hasil cetakan Anda.</p>
-              </div>
-            </div>
-            <div class="flex gap-4">
-              <div class="w-12 h-12 shrink-0 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600">
-                <Award :size="24" />
-              </div>
-              <div>
-                <h5 class="font-bold text-primary mb-1">Harga Kompetitif</h5>
-                <p class="text-sm text-gray-500">Kualitas premium dengan harga yang masuk akal.</p>
-              </div>
-            </div>
-            <div class="flex gap-4">
-              <div class="w-12 h-12 shrink-0 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600">
-                <MapPin :size="24" />
-              </div>
-              <div>
-                <h5 class="font-bold text-primary mb-1">Lokasi Strategis</h5>
-                <p class="text-sm text-gray-500">Mudah dijangkau di wilayah Koja, Jakarta Utara.</p>
+                <h5 class="font-bold text-primary mb-1">{{ feature.title }}</h5>
+                <p class="text-sm text-gray-500">{{ feature.text }}</p>
               </div>
             </div>
           </div>
@@ -94,7 +74,7 @@ onMounted(() => {
             <!-- Map Embed -->
             <div class="rounded-[2rem] overflow-hidden h-[450px] relative">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3967.0189333917815!2d106.9038287!3d-6.1281861!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6a1f8db604085f%3A0x63351233068e2f60!2sJl.%20Bendungan%20Melayu%20No.32%2C%20RW.1%2C%20Rawabadak%20Sel.%2C%20Kec.%20Koja%2C%20Jkt%20Utara%2C%20Daerah%20Khusus%20Ibukota%20Jakarta%2014230!5e0!3m2!1sid!2sid!4v1715340000000!5m2!1sid!2sid"
+                :src="data.mapUrl"
                 class="w-full h-full border-0" allowfullscreen="false" loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
 
@@ -108,7 +88,7 @@ onMounted(() => {
                   <div class="flex-1">
                     <h6 class="font-bold text-primary mb-1">Lokasi Kami</h6>
                     <p class="text-sm text-gray-600 mb-4">
-                      Jl Bendungan Melayu No.32 Rawabadak Selatan, Koja - Jakarta Utara
+                      {{ data.address }}
                     </p>
                     <a href="https://maps.app.goo.gl/TQr7vGJ52akXhzNj8" target="_blank"
                       class="inline-flex items-center gap-2 text-sm font-bold text-accent hover:underline">
