@@ -7,7 +7,14 @@ declare global {
 }
 
 if (!global.__prisma) {
-  global.__prisma = new PrismaClient()
+  const config = useRuntimeConfig()
+  global.__prisma = new PrismaClient({
+    datasources: {
+      db: {
+        url: config.databaseUrl
+      }
+    }
+  })
 }
 
 prisma = global.__prisma

@@ -1,8 +1,14 @@
 import { verifyAccessToken } from '../../utils/jwt';
 
+/**
+ * Get Current User
+ * 
+ * @param event 
+ */
 export default defineEventHandler(async (event) => {
-  const accessToken = getCookie(event, 'access_token');
+  const accessToken = getCookie(event, 'access_token'); // Mengambil cookie access_token
 
+  // Mengembalikan pesan error jika tidak ada cookie access_token
   if (!accessToken) {
     throw createError({
       statusCode: 401,
@@ -10,8 +16,9 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const decoded = verifyAccessToken(accessToken);
+  const decoded = verifyAccessToken(accessToken); // Verifikasi token from utils/jwt.ts
 
+  // Mengembalikan pesan error jika token tidak valid
   if (!decoded) {
     throw createError({
       statusCode: 401,
@@ -19,6 +26,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  // Mengembalikan data user
   return {
     ...decoded,
     isLogin: true,

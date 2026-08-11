@@ -1,11 +1,17 @@
 import { requireAuth } from '../../utils/auth';
 import prisma from '../../utils/prisma';
 
+/**
+ * Update Data About
+ * 
+ * @param event 
+ */
 export default defineEventHandler(async (event) => {
-  requireAuth(event);
+  requireAuth(event); // Memastikan user sudah login
 
-  const body = await readBody(event);
-  
+  const body = await readBody(event); // Mengambil data body dari request
+
+  // Query Prisma ORM Update data berdasarkan Id
   const updatedAbout = await prisma.about.update({
     where: { id: 1 },
     data: {
@@ -18,6 +24,7 @@ export default defineEventHandler(async (event) => {
     }
   });
 
+  // Mengembalikan data yang sudah diupdate
   return {
     ...updatedAbout,
     features: JSON.parse(updatedAbout.features)

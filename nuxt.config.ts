@@ -5,6 +5,13 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
+  runtimeConfig: {
+    databaseUrl: process.env.DATABASE_URL || 'file:./dev.db',
+    jwtAccessSecret: process.env.JWT_ACCESS_SECRET || 'dev-secret-access-key',
+    jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || 'dev-secret-refresh-key',
+    nodeEnv: process.env.NODE_ENV || 'development',
+    public: {}
+  },
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/sitemap',
@@ -22,7 +29,8 @@ export default defineNuxtConfig({
       link: [
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap' }
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap' },
+        { rel: 'icon', type: 'image/png', href: '/favicon.png' }
       ]
     }
   },

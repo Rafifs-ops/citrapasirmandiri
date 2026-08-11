@@ -1,14 +1,20 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
+/**
+ * Get Image
+ * 
+ * @param event 
+ */
 export default defineEventHandler(async (event) => {
-  const pathname = getRouterParam(event, 'pathname');
-  
+  const pathname = getRouterParam(event, 'pathname'); // Mengambil pathname dari router parameter
+
+  // Mengembalikan pesan error jika tidak ada pathname
   if (!pathname) {
     throw createError({ statusCode: 400, statusMessage: 'Path is required' });
   }
 
-  // Resolve the image path inside the storage folder
+  // Path Direktori Gambar
   const storagePath = path.resolve(process.cwd(), 'storage');
   const imagePath = path.join(storagePath, pathname);
 
@@ -20,7 +26,7 @@ export default defineEventHandler(async (event) => {
   try {
     // Check if file exists and get stats
     const stats = await fs.stat(imagePath);
-    
+
     if (!stats.isFile()) {
       throw createError({ statusCode: 404, statusMessage: 'File not found' });
     }
@@ -35,11 +41,11 @@ export default defineEventHandler(async (event) => {
     else if (ext === '.gif') contentType = 'image/gif';
 
     setHeader(event, 'Content-Type', contentType);
-    
+
     // Read and return the file
     const file = await fs.readFile(imagePath);
     return file;
-    
+
   } catch (error: any) {
     if (error.code === 'ENOENT') {
       throw createError({ statusCode: 404, statusMessage: 'Image not found' });

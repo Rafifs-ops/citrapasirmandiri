@@ -1,12 +1,18 @@
 import { requireAuth } from '../../../utils/auth';
 import prisma from '../../../utils/prisma';
 
+/**
+ * Update Data Services
+ * 
+ * @param event 
+ */
 export default defineEventHandler(async (event) => {
-  requireAuth(event);
+  requireAuth(event); // Memastikan user sudah login
 
-  const id = parseInt(getRouterParam(event, 'id') || '0', 10);
-  const body = await readBody(event);
+  const id = parseInt(getRouterParam(event, 'id') || '0', 10); // Mendapatkan Id dari parameter URL
+  const body = await readBody(event); // Mengambil data body dari request
 
+  // Query Prisma ORM Update data berdasarkan Id
   const updatedService = await prisma.service.update({
     where: { id },
     data: {
@@ -20,6 +26,7 @@ export default defineEventHandler(async (event) => {
     }
   });
 
+  // Mengembalikan data yang sudah diupdate
   return {
     ...updatedService,
     features: JSON.parse(updatedService.features),

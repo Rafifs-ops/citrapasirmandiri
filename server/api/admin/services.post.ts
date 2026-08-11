@@ -1,11 +1,17 @@
 import { requireAuth } from '../../utils/auth';
 import prisma from '../../utils/prisma';
 
+/**
+ * Create New Data Services
+ * 
+ * @param event 
+ */
 export default defineEventHandler(async (event) => {
-  requireAuth(event);
+  requireAuth(event); // Memastikan user sudah login
 
-  const body = await readBody(event);
-  
+  const body = await readBody(event); // Mengambil data body dari request
+
+  // Query Prisma ORM Create Data Services
   const newService = await prisma.service.create({
     data: {
       title: body.title,
@@ -18,6 +24,7 @@ export default defineEventHandler(async (event) => {
     }
   });
 
+  // Mengembalikan data yang sudah diupdate
   return {
     ...newService,
     features: JSON.parse(newService.features),
