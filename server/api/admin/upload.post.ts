@@ -18,19 +18,39 @@ export default defineEventHandler(async (event) => {
   }
 
   const uploadedFile = multipart.find(field => field.name === 'image'); // Mencari file gambar
+  const oldImageField = multipart.find(field => field.name === 'oldImage'); // Mencari field gambar lama
 
   // Mengembalikan pesan error jika format file tidak valid
   if (!uploadedFile || !uploadedFile.filename || !uploadedFile.data) {
     throw createError({ statusCode: 400, statusMessage: 'Invalid file format' });
   }
 
+  // Path Direktori Gambar di public/images
+  const storagePath = path.resolve(process.cwd(), 'public/images');
+
+  // Proses hapus gambar lama jika ada
+  if (oldImageField && oldImageField.data) {
+    const oldImageUrl = oldImageField.data.toString();
+    if (oldImageUrl) {
+      // Ekstrak nama file dari URL (contoh URL: "/images/123-abc.jpg")
+      const oldImageFilename = oldImageUrl.split('/').pop();
+      if (oldImageFilename) {
+        const oldImagePath = path.join(storagePath, oldImageFilename);
+        try {
+          await fs.access(oldImagePath);
+          await fs.unlink(oldImagePath);
+        } catch (error) {
+          console.error('Gagal menghapus gambar lama:', error);
+          // Abaikan error jika gambar lama tidak ditemukan
+        }
+      }
+    }
+  }
+
   // Memastikan nama file unik
   const filename = `${Date.now()}-${uploadedFile.filename.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
 
-  // Path Direktori Gambar
-  const storagePath = path.resolve(process.cwd(), 'storage/images');
-
-  // Path Direktori Gambar
+  // Path File Baru
   const filePath = path.join(storagePath, filename);
 
   // Ensure directory exists
@@ -41,6 +61,6 @@ export default defineEventHandler(async (event) => {
 
   // Return the public URL
   return {
-    url: `/api/images/images/${filename}`
+    url: `/images/${filename}`
   };
 });

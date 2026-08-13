@@ -9,6 +9,8 @@ export default defineNuxtConfig({
     databaseUrl: process.env.DATABASE_URL || 'file:./dev.db',
     jwtAccessSecret: process.env.JWT_ACCESS_SECRET || 'dev-secret-access-key',
     jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || 'dev-secret-refresh-key',
+    tursoDatabaseUrl: process.env.TURSO_DATABASE_URL,
+    tursoAuthToken: process.env.TURSO_AUTH_TOKEN,
     nodeEnv: process.env.NODE_ENV || 'development',
     public: {}
   },
