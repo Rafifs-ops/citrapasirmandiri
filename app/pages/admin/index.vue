@@ -23,8 +23,6 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-
 definePageMeta({
   layout: 'admin',
   middleware: ['auth']

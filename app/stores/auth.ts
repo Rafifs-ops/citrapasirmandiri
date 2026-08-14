@@ -17,8 +17,9 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   const fetchSession = async () => {
+    const headers = useRequestHeaders(['cookie']) as HeadersInit;
     try {
-      const data = await $fetch('/api/auth/me');
+      const data: any = await $fetch('/api/auth/me', { headers });
       if (data && data.isLogin) {
         setAuth(data);
       }
