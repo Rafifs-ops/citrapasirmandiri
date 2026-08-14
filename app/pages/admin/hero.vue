@@ -45,7 +45,43 @@
         </button>
       </div>
     </form>
-    <div v-else class="py-8 text-center text-gray-500">Loading data...</div>
+    <div v-else class="animate-pulse">
+      <div class="mb-4">
+        <div class="h-5 bg-gray-200 rounded w-1/4 mb-2"></div>
+        <div class="h-10 bg-gray-200 rounded-lg w-full"></div>
+      </div>
+      
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <div class="h-5 bg-gray-200 rounded w-1/4 mb-2"></div>
+          <div class="h-10 bg-gray-200 rounded-lg w-full"></div>
+        </div>
+        <div>
+          <div class="h-5 bg-gray-200 rounded w-1/4 mb-2"></div>
+          <div class="h-10 bg-gray-200 rounded-lg w-full"></div>
+        </div>
+      </div>
+      
+      <div class="mb-4">
+        <div class="h-5 bg-gray-200 rounded w-1/4 mb-2"></div>
+        <div class="h-28 bg-gray-200 rounded-lg w-full"></div>
+      </div>
+
+      <div class="mb-6">
+        <div class="h-5 bg-gray-200 rounded w-1/4 mb-2"></div>
+        <div class="flex items-start gap-6">
+          <div class="w-48 h-32 rounded-lg bg-gray-200 shrink-0"></div>
+          <div class="flex-1">
+            <div class="h-10 bg-gray-200 rounded-lg w-full mb-2"></div>
+            <div class="h-4 bg-gray-200 rounded w-2/3"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <div class="h-10 bg-gray-200 rounded-lg w-32"></div>
+      </div>
+    </div>
   </div>
 </template>
 

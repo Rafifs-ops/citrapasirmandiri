@@ -3,7 +3,8 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
         <h3 class="text-lg font-bold text-gray-700 mb-2">Total Services</h3>
-        <p class="text-4xl font-bold text-primary">{{ servicesCount }}</p>
+        <div v-if="pending" class="h-10 bg-gray-200 rounded w-16 mb-1 animate-pulse"></div>
+        <p v-else class="text-4xl font-bold text-primary">{{ servicesCount }}</p>
         <div class="mt-4">
           <NuxtLink to="/admin/services" class="text-sm text-accent hover:underline">Manage Services &rarr;</NuxtLink>
         </div>
@@ -30,6 +31,7 @@ definePageMeta({
 });
 
 const servicesCount = ref(0);
+const pending = ref(true);
 
 onMounted(async () => {
   try {
@@ -39,6 +41,8 @@ onMounted(async () => {
     }
   } catch (error) {
     console.error(error);
+  } finally {
+    pending.value = false;
   }
 });
 </script>

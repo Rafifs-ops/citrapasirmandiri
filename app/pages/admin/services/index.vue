@@ -17,9 +17,28 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-if="pending">
-            <td colspan="3" class="px-6 py-8 text-center text-gray-500">Loading services...</td>
-          </tr>
+          <template v-if="pending">
+            <tr v-for="i in 3" :key="`skeleton-${i}`" class="animate-pulse">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0 h-10 w-10 bg-gray-200 rounded"></div>
+                  <div class="ml-4">
+                    <div class="h-4 bg-gray-200 rounded w-32 mb-2"></div>
+                    <div class="h-3 bg-gray-200 rounded w-20"></div>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                <div class="h-4 bg-gray-200 rounded w-48"></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-right">
+                <div class="flex justify-end gap-4">
+                  <div class="h-4 bg-gray-200 rounded w-8"></div>
+                  <div class="h-4 bg-gray-200 rounded w-12"></div>
+                </div>
+              </td>
+            </tr>
+          </template>
           <tr v-else-if="!services || services.length === 0">
             <td colspan="3" class="px-6 py-8 text-center text-gray-500">No services found.</td>
           </tr>
@@ -55,7 +74,7 @@ definePageMeta({
   middleware: ['auth']
 });
 
-const { data: services, pending, refresh } = await useFetch('/api/admin/services');
+const { data: services, pending, refresh } = useFetch('/api/admin/services', { lazy: true });
 
 const deleteService = async (id) => {
   if (!confirm('Are you sure you want to delete this service?')) return;

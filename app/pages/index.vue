@@ -3,7 +3,7 @@ import { onMounted } from 'vue'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-const { data: contentData } = await useFetch('/api/content')
+const { data: contentData, pending } = useFetch('/api/content', { lazy: true })
 
 // SEO Meta
 useSeoMeta({
@@ -43,10 +43,17 @@ onMounted(() => {
   <div class="min-h-screen bg-white selection:bg-accent/30 selection:text-primary overflow-x-hidden">
     <LayoutHeader />
 
-    <main v-if="contentData">
-      <SectionsHero v-if="contentData.hero" :data="contentData.hero" />
-      <SectionsServices v-if="contentData.services" :data="contentData.services" />
-      <SectionsAboutLocation v-if="contentData.about" :data="contentData.about" />
+    <main>
+      <template v-if="pending">
+        <SkeletonsHero />
+        <SkeletonsServices />
+        <SkeletonsAboutLocation />
+      </template>
+      <template v-else-if="contentData">
+        <SectionsHero v-if="contentData.hero" :data="contentData.hero" />
+        <SectionsServices v-if="contentData.services" :data="contentData.services" />
+        <SectionsAboutLocation v-if="contentData.about" :data="contentData.about" />
+      </template>
     </main>
 
     <LayoutFooter />
