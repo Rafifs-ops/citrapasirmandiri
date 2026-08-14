@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
 
   const decoded = verifyAccessToken(accessToken); // Verifikasi token from utils/jwt.ts
 
-  // Mengembalikan pesan error jika token tidak valid
+  // Mengembalikan pesan error jika token sudah kadaluwarsa
   if (!decoded) {
     throw createError({
       statusCode: 401,

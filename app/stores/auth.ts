@@ -23,7 +23,7 @@ export const useAuthStore = defineStore('auth', () => {
         setAuth(data);
       }
     } catch (error) {
-      clearAuth();
+      clearAuth(); // Menghapus seluruh kredensial auth dan mengubah status login menjadi false
     }
   };
 
@@ -32,8 +32,8 @@ export const useAuthStore = defineStore('auth', () => {
       await $fetch('/api/auth/logout', { method: 'POST' });
       clearAuth();
       navigateTo('/login');
-    } catch (error) {
-      console.error('Logout failed', error);
+    } catch (error: any) {
+      console.error('Logout failed', error.statusMessage);
     }
   };
 

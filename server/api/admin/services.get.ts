@@ -7,7 +7,7 @@ import prisma from '../../utils/prisma';
  * @param event 
  */
 export default defineEventHandler(async (event) => {
-  requireAuth(event); // Memastikan user sudah login
+  requireAuth(event); // Memastikan user sudah login, bisa lgsg throw error 401 jika token auth kadaluwarsa
 
   // Query Prisma ORM Get All Data Services
   const services = await prisma.service.findMany({

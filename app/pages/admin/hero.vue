@@ -3,44 +3,51 @@
     <div v-if="successMsg" class="mb-4 bg-green-50 text-green-700 p-4 rounded-lg flex items-center">
       {{ successMsg }}
     </div>
-    
+
     <form @submit.prevent="saveHero" v-if="form">
       <div class="mb-4">
         <label class="block text-sm font-medium text-gray-700 mb-1">Badge Text</label>
-        <input v-model="form.badgeText" type="text" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+        <input v-model="form.badgeText" type="text" required
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
       </div>
-      
+
       <div class="grid grid-cols-2 gap-4 mb-4">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
-          <input v-model="form.title" type="text" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+          <input v-model="form.title" type="text" required
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Title Accent</label>
-          <input v-model="form.titleAccent" type="text" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+          <input v-model="form.titleAccent" type="text" required
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
         </div>
       </div>
-      
+
       <div class="mb-4">
         <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-        <textarea v-model="form.description" required rows="4" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent outline-none"></textarea>
+        <textarea v-model="form.description" required rows="4"
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent outline-none"></textarea>
       </div>
 
       <div class="mb-6">
         <label class="block text-sm font-medium text-gray-700 mb-2">Image</label>
         <div class="flex items-start gap-6">
-          <div v-if="form.image" class="w-48 h-32 rounded-lg overflow-hidden border border-gray-200 shrink-0 bg-gray-50">
+          <div v-if="form.image"
+            class="w-48 h-32 rounded-lg overflow-hidden border border-gray-200 shrink-0 bg-gray-50">
             <img :src="form.image" class="w-full h-full object-cover">
           </div>
           <div class="flex-1">
-            <input type="file" accept="image/*" @change="handleFileUpload" class="w-full border border-gray-300 rounded-lg px-4 py-2 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 text-sm">
+            <input type="file" accept="image/*" @change="handleFileUpload"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 text-sm">
             <p class="text-xs text-gray-500 mt-2">Upload a new image to replace the current one. Max size 2MB.</p>
           </div>
         </div>
       </div>
 
       <div class="flex justify-end">
-        <button type="submit" :disabled="isSaving" class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-6 rounded-lg transition-colors disabled:opacity-50">
+        <button type="submit" :disabled="isSaving"
+          class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-6 rounded-lg transition-colors disabled:opacity-50">
           {{ isSaving ? 'Saving...' : 'Save Changes' }}
         </button>
       </div>
@@ -50,7 +57,7 @@
         <div class="h-5 bg-gray-200 rounded w-1/4 mb-2"></div>
         <div class="h-10 bg-gray-200 rounded-lg w-full"></div>
       </div>
-      
+
       <div class="grid grid-cols-2 gap-4 mb-4">
         <div>
           <div class="h-5 bg-gray-200 rounded w-1/4 mb-2"></div>
@@ -61,7 +68,7 @@
           <div class="h-10 bg-gray-200 rounded-lg w-full"></div>
         </div>
       </div>
-      
+
       <div class="mb-4">
         <div class="h-5 bg-gray-200 rounded w-1/4 mb-2"></div>
         <div class="h-28 bg-gray-200 rounded-lg w-full"></div>
@@ -120,11 +127,14 @@ const handleFileUpload = async (event) => {
       method: 'POST',
       body: formData
     });
-    
+
     if (data && data.url) {
       form.value.image = data.url;
     }
   } catch (err) {
+    if (err && err.statusCode === 401) {
+      navigateTo('/login');
+    }
     alert('Upload failed');
     console.error(err);
   }
@@ -141,6 +151,9 @@ const saveHero = async () => {
     successMsg.value = 'Hero section updated successfully!';
     setTimeout(() => successMsg.value = '', 3000);
   } catch (err) {
+    if (err && err.statusCode === 401) {
+      navigateTo('/login');
+    }
     alert('Failed to save');
     console.error(err);
   } finally {

@@ -9,7 +9,7 @@
           <NuxtLink to="/admin/services" class="text-sm text-accent hover:underline">Manage Services &rarr;</NuxtLink>
         </div>
       </div>
-      
+
       <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
         <h3 class="text-lg font-bold text-gray-700 mb-2">Landing Page</h3>
         <p class="text-gray-500 text-sm mb-4">Edit konten halaman utama website Anda agar selalu up-to-date.</p>

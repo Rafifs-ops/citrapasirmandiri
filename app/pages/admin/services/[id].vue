@@ -131,6 +131,9 @@ onMounted(async () => {
       }
     }
   } catch (err) {
+    if (err && err.statusCode === 401) {
+      navigateTo('/login');
+    }
     console.error(err);
   }
 });
@@ -153,6 +156,9 @@ const handleFileUpload = async (event) => {
       form.value.image = data.url;
     }
   } catch (err) {
+    if (err && err.statusCode === 401) {
+      navigateTo('/login');
+    }
     alert('Upload failed');
     console.error(err);
   }
@@ -172,6 +178,9 @@ const saveService = async () => {
     successMsg.value = 'Service updated successfully!';
     setTimeout(() => successMsg.value = '', 3000);
   } catch (err) {
+    if (err && err.statusCode === 401) {
+      navigateTo('/login');
+    }
     alert('Failed to save');
     console.error(err);
   } finally {

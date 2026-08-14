@@ -9,32 +9,38 @@
       <div class="grid grid-cols-2 gap-4 mb-4">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
-          <input v-model="form.title" type="text" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary outline-none">
+          <input v-model="form.title" type="text" required
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary outline-none">
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Icon (Lucide Name)</label>
-          <input v-model="form.icon" type="text" required placeholder="e.g. FileText" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary outline-none">
+          <input v-model="form.icon" type="text" required placeholder="e.g. FileText"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary outline-none">
         </div>
       </div>
-      
+
       <div class="mb-4">
         <label class="block text-sm font-medium text-gray-700 mb-1">Short Description</label>
-        <textarea v-model="form.description" required rows="2" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary outline-none"></textarea>
+        <textarea v-model="form.description" required rows="2"
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary outline-none"></textarea>
       </div>
 
       <div class="mb-4">
         <label class="block text-sm font-medium text-gray-700 mb-1">Detailed Description</label>
-        <textarea v-model="form.details" required rows="3" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary outline-none"></textarea>
+        <textarea v-model="form.details" required rows="3"
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary outline-none"></textarea>
       </div>
 
       <div class="mb-6">
         <label class="block text-sm font-medium text-gray-700 mb-2">Image</label>
         <div class="flex items-start gap-6">
-          <div v-if="form.image" class="w-32 h-32 rounded-lg overflow-hidden border border-gray-200 shrink-0 bg-gray-50">
+          <div v-if="form.image"
+            class="w-32 h-32 rounded-lg overflow-hidden border border-gray-200 shrink-0 bg-gray-50">
             <img :src="form.image" class="w-full h-full object-cover">
           </div>
           <div class="flex-1">
-            <input type="file" accept="image/*" @change="handleFileUpload" class="w-full border border-gray-300 rounded-lg px-4 py-2 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 text-sm">
+            <input type="file" accept="image/*" @change="handleFileUpload"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 text-sm">
           </div>
         </div>
       </div>
@@ -44,14 +50,17 @@
         <div>
           <div class="flex items-center justify-between mb-4">
             <label class="block text-sm font-medium text-gray-700">Features</label>
-            <button type="button" @click="addFeature" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1 rounded">
+            <button type="button" @click="addFeature"
+              class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1 rounded">
               + Add Feature
             </button>
           </div>
           <div class="space-y-2">
             <div v-for="(feature, index) in form.features" :key="index" class="flex gap-2">
-              <input v-model="form.features[index]" type="text" class="flex-1 border border-gray-300 rounded px-3 py-1.5 text-sm" placeholder="Feature item">
-              <button type="button" @click="removeFeature(index)" class="text-red-500 hover:bg-red-50 px-2 rounded">&times;</button>
+              <input v-model="form.features[index]" type="text"
+                class="flex-1 border border-gray-300 rounded px-3 py-1.5 text-sm" placeholder="Feature item">
+              <button type="button" @click="removeFeature(index)"
+                class="text-red-500 hover:bg-red-50 px-2 rounded">&times;</button>
             </div>
           </div>
         </div>
@@ -62,22 +71,26 @@
           <div class="space-y-3">
             <div>
               <label class="block text-xs text-gray-500 mb-1">Min. Order</label>
-              <input v-model="form.specs.minOrder" type="text" class="w-full border border-gray-300 rounded px-3 py-1.5 text-sm">
+              <input v-model="form.specs.minOrder" type="text"
+                class="w-full border border-gray-300 rounded px-3 py-1.5 text-sm">
             </div>
             <div>
               <label class="block text-xs text-gray-500 mb-1">Process Time</label>
-              <input v-model="form.specs.processTime" type="text" class="w-full border border-gray-300 rounded px-3 py-1.5 text-sm">
+              <input v-model="form.specs.processTime" type="text"
+                class="w-full border border-gray-300 rounded px-3 py-1.5 text-sm">
             </div>
             <div>
               <label class="block text-xs text-gray-500 mb-1">Quality</label>
-              <input v-model="form.specs.quality" type="text" class="w-full border border-gray-300 rounded px-3 py-1.5 text-sm">
+              <input v-model="form.specs.quality" type="text"
+                class="w-full border border-gray-300 rounded px-3 py-1.5 text-sm">
             </div>
           </div>
         </div>
       </div>
 
       <div class="flex justify-end">
-        <button type="submit" :disabled="isSaving" class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-6 rounded-lg transition-colors disabled:opacity-50">
+        <button type="submit" :disabled="isSaving"
+          class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-6 rounded-lg transition-colors disabled:opacity-50">
           {{ isSaving ? 'Saving...' : 'Create Service' }}
         </button>
       </div>
@@ -124,11 +137,14 @@ const handleFileUpload = async (event) => {
       method: 'POST',
       body: formData
     });
-    
+
     if (data && data.url) {
       form.value.image = data.url;
     }
   } catch (err) {
+    if (err && err.statusCode === 401) {
+      navigateTo('/login');
+    }
     alert('Upload failed');
     console.error(err);
   }
@@ -146,6 +162,9 @@ const saveService = async () => {
     });
     router.push('/admin/services');
   } catch (err) {
+    if (err && err.statusCode === 401) {
+      navigateTo('/login');
+    }
     alert('Failed to save');
     console.error(err);
   } finally {
